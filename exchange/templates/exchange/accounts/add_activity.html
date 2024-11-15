@@ -1,0 +1,46 @@
+
+<h1>Ajouter une Activité</h1>
+
+<!-- Vérifier si des messages d'erreur existent -->
+{% if form.errors %}
+  <div class="alert alert-danger">
+    <p>Veuillez corriger les erreurs suivantes :</p>
+    <ul>
+      {% for field in form %}
+        {% for error in field.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+
+<!-- Affichage du formulaire -->
+<form method="post" class="form">
+  {% csrf_token %}
+
+  <div class="form-group">
+    <label for="id_title">Titre de l'activité</label>
+    {{ form.title }}  <!-- Affiche le champ title -->
+  </div>
+
+  <div class="form-group">
+    <label for="id_description">Description</label>
+    {{ form.description }}  <!-- Affiche le champ description -->
+  </div>
+
+  <div class="form-group">
+    <label for="id_date">Date</label>
+    {{ form.date }}
+  </div>
+
+  <div class="form-group">
+    <label for="id_location">Emplacement</label>
+    {{ form.location }}
+  </div>
+
+  <button type="submit" class="btn btn-primary">Ajouter l'activité</button>
+</form>
+
+<hr>
+<a href="{% url 'dashboard' %}" class="btn btn-secondary">Retour au tableau de bord</a>

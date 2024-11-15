@@ -1,0 +1,42 @@
+<!-- exchange/templates/profile.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil de {{ user.username }}</title>
+</head>
+<body>
+    <div class="profile-container">
+        <h1>Bienvenue, {{ user.username }}!</h1>
+
+        <section class="profile-info">
+            <h2>Informations du profil</h2>
+            <p><strong>Nom d'utilisateur :</strong> {{ user.username }}</p>
+            <p><strong>Email :</strong> {{ user.email }}</p>
+            <p><strong>Date d'inscription :</strong> {{ user.date_joined|date:"d/m/Y" }}</p>
+            <p><strong>Dernière connexion :</strong> {{ user.last_login|date:"d/m/Y H:i" }}</p>
+        </section>
+
+        {% if user.first_name or user.last_name %}
+        <section class="additional-info">
+            <h2>Informations supplémentaires</h2>
+            {% if user.first_name %}
+                <p><strong>Prénom :</strong> {{ user.first_name }}</p>
+            {% endif %}
+            {% if user.last_name %}
+                <p><strong>Nom de famille :</strong> {{ user.last_name }}</p>
+            {% endif %}
+        </section>
+        {% endif %}
+
+        <section class="actions">
+            <h2>Actions</h2>
+            <a href="{% url 'password_change' %}" class="btn">Changer le mot de passe</a>
+            <a href="{% url 'logout' %}" class="btn">Déconnexion</a>
+            <!-- Ajouter un lien vers une page de modification du profil, si elle existe -->
+            <a href="{% url 'edit_profile' %}" class="btn">Modifier le profil</a>
+        </section>
+    </div>
+</body>
+</html>

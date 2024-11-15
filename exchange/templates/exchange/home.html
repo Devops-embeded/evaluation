@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil - Échange de Compétences</title>
+    <style>
+        *{
+        margin: 0;
+        padding:0;
+        }
+        header{
+        background-color: grey;
+        color: red;
+        }header h1,p{
+        text-align: center;
+        }
+        nav{
+                background-color: blue;
+
+        }
+        .skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.skills-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.skill-card {
+    width: 30%; /* Chaque carte occupe 30% de la largeur de l'écran */
+    margin: 10px 0;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+
+.skill-card h3 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.skill-card p {
+    font-size: 1em;
+    color: #333;
+}
+        .column{
+        background-color: red;
+        }
+        .exchanges{
+        background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Bienvenue sur l'application d'échange de compétences</h1>
+        <p>Rejoignez notre communauté pour partager et apprendre de nouvelles compétences avec des personnes près de chez vous !</p>
+    </header>
+    <nav>
+         {% if user.is_authenticated %}
+        <p>Bonjour, {{ user.username }}! Vous êtes connecté.</p>
+        <a href="{% url 'profile' %}">Voir mon profil</a>
+                <a href="{% url 'dashboard' %}">Accéder au Tableau de Bord</a>
+
+        <a href="{% url 'logout' %}">Déconnexion</a>
+    {% else %}
+        <p>Vous n'êtes pas connecté. <a href="{% url 'login' %}">Se connecter</a></p>
+    {% endif %}
+    </nav>
+    <h1>Compétences</h1>
+<div class="skills">
+    {% for column in skills_list %}
+        <div class="column">
+            {% for skill in column %}
+                <p>{{ skill.name }} - {{ skill.description }}</p>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+
+<h2>Mes échanges de services</h2>
+<div class="exchanges">
+    {% if user_exchanges %}
+        <ul>
+            {% for exchange in user_exchanges %}
+                <li>
+                    Échange avec {{ exchange.provider.username }} pour la compétence
+                    "{{ exchange.skill.name }}" le {{ exchange.date }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Vous n'avez pas encore d'échanges de services déclarés.</p>
+    {% endif %}
+</div>
+{% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+</body>
+</html>
