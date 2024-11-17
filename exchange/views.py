@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 
 from .forms import SkillForm, AvailabilityForm, \
     ActivityForm, ExchangeForm, ProfileUpdateForm  # Assurez-vous d'avoir défini ces formulaires dans forms.py
-from .models import Skill, Activity
+from .models import Skill, Activity, Exchange
 
 
 # Vue pour la page d'accueil
@@ -121,3 +121,7 @@ def add_exchange(request):
         form = ExchangeForm()
 
     return render(request, 'exchange/add_exchange.html', {'form': form})
+
+def my_exchanges(request):
+    exchanges = Exchange.objects.filter(requester=request.user)
+    return render(request, 'exchange/my_exchanges.html', {'exchanges': exchanges})

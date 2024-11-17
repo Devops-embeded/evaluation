@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes échanges</title>
+</head>
+<body>
+    <h1>Mes échanges</h1>
+    {% if exchanges %}
+        <ul>
+        {% for exchange in exchanges %}
+            <li>
+                <strong>{{ exchange.skill.name }}</strong> - {{ exchange.date }}
+                (avec {{ exchange.provider.username }})
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Vous n'avez aucun échange pour l'instant.</p>
+    {% endif %}
+</body>
+</html>

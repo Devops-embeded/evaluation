@@ -5,110 +5,199 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accueil - Échange de Compétences</title>
     <style>
-        *{
-        margin: 0;
-        padding:0;
-        }
-        header{
-        background-color: grey;
-        color: red;
-        }header h1,p{
-        text-align: center;
-        }
-        nav{
-                background-color: blue;
-
-        }
-        .skills-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.skills-row {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-}
-
-.skill-card {
-    width: 30%; /* Chaque carte occupe 30% de la largeur de l'écran */
-    margin: 10px 0;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    background-color: #f9f9f9;
-}
-
-.skill-card h3 {
+   /* Général */
+body {
+    font-family: Arial, sans-serif;
     margin: 0;
-    font-size: 1.2em;
-}
-
-.skill-card p {
-    font-size: 1em;
+    padding: 0;
+    background-color: #f4f4f9;
     color: #333;
 }
-        .column{
-        background-color: red;
-        }
-        .exchanges{
-        background-color: red;
-        }
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Barre de navigation */
+.navbar {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}
+
+.navbar .logo {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+/* Section de bienvenue */
+.welcome-section {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #007bff;
+    color: white;
+    border-bottom: 5px solid #0056b3;
+}
+
+.welcome-section h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.welcome-section p {
+    font-size: 1.2em;
+    line-height: 1.5;
+}
+
+/* Section des échanges */
+.exchange-section {
+    padding: 40px 20px;
+}
+
+.exchange-section h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #007bff;
+}
+
+.card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin: 20px auto;
+    max-width: 400px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 15px;
+}
+
+.card-content h3 {
+    margin: 0 0 10px;
+    font-size: 1.4em;
+    color: #333;
+}
+
+.card-content p {
+    margin: 0 0 15px;
+    font-size: 1em;
+    line-height: 1.5;
+    color: #666;
+}
+
+.card-content a {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+
+.card-content a:hover {
+    background-color: #0056b3;
+}
+
+/* Pied de page */
+.footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    margin-top: 40px;
+}
+
+.footer a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
     </style>
 </head>
 <body>
-    <header>
-        <h1>Bienvenue sur l'application d'échange de compétences</h1>
-        <p>Rejoignez notre communauté pour partager et apprendre de nouvelles compétences avec des personnes près de chez vous !</p>
-    </header>
-    <nav>
-         {% if user.is_authenticated %}
-        <p>Bonjour, {{ user.username }}! Vous êtes connecté.</p>
-        <a href="{% url 'profile' %}">Voir mon profil</a>
-                <a href="{% url 'dashboard' %}">Accéder au Tableau de Bord</a>
-
-        <a href="{% url 'logout' %}">Déconnexion</a>
-    {% else %}
-        <p>Vous n'êtes pas connecté. <a href="{% url 'login' %}">Se connecter</a></p>
-    {% endif %}
-    </nav>
-    <h1>Compétences</h1>
-<div class="skills">
-    {% for column in skills_list %}
-        <div class="column">
-            {% for skill in column %}
-                <p>{{ skill.name }} - {{ skill.description }}</p>
-            {% endfor %}
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil</title>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">ServiceXchange</div>
+        <div>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'profile' %}">Profile</a>
+            <a href="{% url 'logout' %}">Logout</a>
         </div>
-    {% endfor %}
-</div>
+    </nav>
 
-<h2>Mes échanges de services</h2>
-<div class="exchanges">
-    {% if user_exchanges %}
-        <ul>
-            {% for exchange in user_exchanges %}
-                <li>
-                    Échange avec {{ exchange.provider.username }} pour la compétence
-                    "{{ exchange.skill.name }}" le {{ exchange.date }}
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>Vous n'avez pas encore d'échanges de services déclarés.</p>
-    {% endif %}
-</div>
-{% if messages %}
-    <ul>
-        {% for message in messages %}
-            <li class="{{ message.tags }}">{{ message }}</li>
+    <!-- Section de bienvenue -->
+    <div class="welcome-section">
+        <h1>Bienvenue sur ServiceXchange</h1>
+        <p>Connectez-vous avec les autres utilisateurs pour échanger des services et des compétences.</p>
+    </div>
+
+    <!-- Section des échanges -->
+    <div class="exchange-section">
+        <h2>Échanges récents</h2>
+        {% for exchange in exchanges %}
+        <div class="card">
+            <div class="card-content">
+                <h3>{{ exchange.skill.name }}</h3>
+                <p>Proposé par : {{ exchange.provider.username }}</p>
+                <p>Demandeur : {{ exchange.requester.username }}</p>
+                <p>Date : {{ exchange.date }}</p>
+                <a href="{% url 'exchange_detail' exchange.id %}">Voir les détails</a>
+            </div>
+        </div>
+        {% empty %}
+        <a href="{% url 'my_exchanges' %}"><i class="fas fa-list"></i> Mes échanges</a>
+
+        <p>Aucun échange déclaré pour le moment.</p>
         {% endfor %}
-    </ul>
-{% endif %}
+    </div>
 
+    <!-- Pied de page -->
+    <footer class="footer">
+        <p>&copy; 2024 ServiceXchange. Tous droits réservés. <a href="#">Contactez-nous</a>.</p>
+    </footer>
+</body>
+</html>
 
 </body>
 </html>

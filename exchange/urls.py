@@ -14,4 +14,6 @@ urlpatterns = [
     path('accounts/logout/', views.logout_view, name='logout'),
     path('accounts/add-activity/', views.add_activity, name='add_activity'),
     path('add-exchange/', views.add_exchange, name='add_exchange'),
+    path('my-exchanges/', views.my_exchanges, name='my_exchanges'),  # Ajoutez ce chemin
+
 ]
