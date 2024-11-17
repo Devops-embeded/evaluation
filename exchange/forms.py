@@ -30,12 +30,20 @@ class AvailabilityForm(forms.ModelForm):
         model = Availability
         fields = ['day', 'time']  # Exemple de champs, à adapter selon votre modèle
 
-class ExchangeForm(forms.ModelForm):
-    # Ajoutez un champ pour sélectionner un utilisateur parmi ceux qui sont enregistrés
-    provider = forms.ModelChoiceField(queryset=User.objects.all(), label="Sélectionner un prestataire")
-    skill = forms.ModelChoiceField(queryset=Skill.objects.all(), label="Sélectionner une compétence")
-    date = forms.DateField(widget=forms.SelectDateWidget(), label="Date de l'échange")
+
+class ProfileUpdateForm(forms.ModelForm):
+    first_name = forms.CharField(label='Prénom', required=False, max_length=30)
+    last_name = forms.CharField(label='Nom', required=False, max_length=30)
+    email = forms.EmailField(label='Adresse email', required=False)
 
     class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
+
+class ExchangeForm(forms.ModelForm):
+    class Meta:
         model = Exchange
-        fields = ['provider', 'skill', 'date']
+        fields = ['provider', 'skill', 'date']  # Champs disponibles dans le formulaire
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'}),
+        }

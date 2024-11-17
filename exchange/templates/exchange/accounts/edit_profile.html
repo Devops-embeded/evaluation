@@ -1,5 +1,8 @@
+{% block content %}
+<h2>Modifier le profil</h2>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Mettre à jour</button>
+    <button type="submit" class="btn btn-primary">Mettre à jour</button>
 </form>
+{% endblock %}

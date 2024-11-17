@@ -1,61 +1,45 @@
-<!-- templates/dashboard.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Tableau de Bord</title>
-</head>
-<body>
-    <h1>Bienvenue, {{ user.username }}!</h1>
-    <h2>Mon Profil</h2>
-    <p><strong>Email :</strong> {{ user.email }}</p>
 
-    <h2>Mes Compétences</h2>
-    <ul>
-        {% for skill in user_skills %}
-            <li>{{ skill }}</li>
+{% block content %}
+<header>
+    Bienvenue sur votre tableau de bord
+</header>
+
+<div class="container">
+    <h2>Vos activités</h2>
+
+    <!-- Bouton pour ajouter un échange -->
+<a href="{% url 'add_exchange' %}" class="btn btn-primary">Ajouter un échange</a>
+
+    <!-- Liste des activités -->
+    <div class="activities">
+        {% for activity in activities %}
+            <div class="activity">
+                <h3>{{ activity.title }}</h3>
+                <p>{{ activity.description }}</p>
+                <p><small>Créée le : {{ activity.date }}</small></p>
+            </div>
+        {% empty %}
+            <p class="no-activities">Vous n'avez pas encore d'échanges de services déclarés.</p>
         {% endfor %}
-    </ul>
+    </div>
+</div>
+{% endblock %}
+<div class="container mt-5">
+    <h2>Mes échanges de service</h2>
 
-    <h2>Mes Activités</h2>
-    <table border="1">
-        <tr>
-            <th>Activité</th>
-            <th>Status</th>
-            <th>Date</th>
-        </tr>
-        {% for activity in user_activities %}
-            <tr>
-                <td>{{ activity.activity }}</td>
-                <td>{{ activity.status }}</td>
-                <td>{{ activity.date }}</td>
-            </tr>
-        {% endfor %}
-    </table>
-
-    <h2>Actions</h2>
-    <ul>
-        <li><a href="{% url 'profile' %}">Voir mon profil</a></li>
-        <li><a href="{% url 'logout' %}">Déconnexion</a></li>
-    </ul>
-<!-- templates/dashboard.html -->
-<h2>Mes Activités</h2>
-<a href="{% url 'add_activity' %}">Ajouter une nouvelle activité</a>
-<table border="1">
-    <tr>
-        <th>Activité</th>
-        <th>Status</th>
-        <th>Date</th>
-    </tr>
-    {% for activity in user_activities %}
-        <tr>
-            <td>{{ activity.name }}</td>
-            <td>{{ activity.get_status_display }}</td>
-            <td>{{ activity.date }}</td>
-        </tr>
-    {% endfor %}
-</table>
-
-</table>
-</body>
-</html>
+    {% if exchanges %}
+        <ul class="list-group">
+            {% for exchange in exchanges %}
+                <li class="list-group-item">
+                    <strong>Demandeur :</strong> {{ exchange.requester.username }}<br>
+                    <strong>Fournisseur :</strong> {{ exchange.provider.username }}<br>
+                    <strong>Compétence :</strong> {{ exchange.skill.name }}<br>
+                    <strong>Date :</strong> {{ exchange.date }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Vous n'avez pas encore déclaré d'échange de service.</p>
+        <a href="{% url 'add_exchange' %}" class="btn btn-primary">Ajouter un échange</a>
+    {% endif %}
+</div>

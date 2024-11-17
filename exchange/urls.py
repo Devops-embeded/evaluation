@@ -13,5 +13,5 @@ urlpatterns = [
     path('accounts/edit_profile/', views.edit_profile, name='edit_profile'),
     path('accounts/logout/', views.logout_view, name='logout'),
     path('accounts/add-activity/', views.add_activity, name='add_activity'),
-
+    path('add-exchange/', views.add_exchange, name='add_exchange'),
 ]

@@ -4,7 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.shortcuts import render, redirect
 
 from .forms import SkillForm, AvailabilityForm, \
-    ActivityForm, ExchangeForm  # Assurez-vous d'avoir défini ces formulaires dans forms.py
+    ActivityForm, ExchangeForm, ProfileUpdateForm  # Assurez-vous d'avoir défini ces formulaires dans forms.py
 from .models import Skill, Activity
 
 
@@ -32,7 +32,7 @@ def add_skill(request):
             return redirect('dashboard')
     else:
         form = SkillForm()
-    return render(request, 'exchange/add_skill.html', {'form': form})
+    return render(request, 'exchange/add_exchange.html', {'form': form})
 
 
 # Vue pour ajouter la disponibilité
@@ -88,9 +88,15 @@ def logout_view(request):
 # Vue pour éditer le profil de l'utilisateur
 @login_required
 def edit_profile(request):
-    # Cette partie pourrait être remplie avec un formulaire d'édition de profil personnalisé
-    return render(request, 'exchange/accounts/edit_profile.html')
+    if request.method == 'POST':
+        form = ProfileUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')  # Redirige vers la page de profil après mise à jour
+    else:
+        form = ProfileUpdateForm(instance=request.user)
 
+    return render(request, 'exchange/accounts/edit_profile.html', {'form': form})
 
 # Vue pour ajouter une activité
 @login_required
@@ -109,11 +115,8 @@ def add_exchange(request):
     if request.method == 'POST':
         form = ExchangeForm(request.POST)
         if form.is_valid():
-            # Assurez-vous que l'utilisateur connecté est bien celui qui effectue la demande
-            exchange = form.save(commit=False)
-            exchange.requester = request.user  # L'utilisateur connecté est le demandeur de l'échange
-            exchange.save()
-            return redirect('home')  # Rediriger vers la page d'accueil ou ailleurs après l'ajout de l'échange
+            form.save()
+            return redirect('dashboard')  # Redirige vers le tableau de bord après déclaration
     else:
         form = ExchangeForm()
 

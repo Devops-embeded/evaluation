@@ -1,42 +1,130 @@
 <!-- exchange/templates/profile.html -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <style>
+        /* profile.css */
+
+/* Style général */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+/* En-tête */
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 1rem 2rem;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+/* Conteneur principal */
+.container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Titre */
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+/* Informations utilisateur */
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.profile-info div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.profile-info div span {
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+/* Bouton d'édition */
+.btn-edit {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    width: 100%;
+}
+
+.btn-edit:hover {
+    background-color: #45a049;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .profile-info div {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .profile-info div span {
+        margin-top: 0.5rem;
+    }
+}
+
+    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil de {{ user.username }}</title>
 </head>
 <body>
-    <div class="profile-container">
-        <h1>Bienvenue, {{ user.username }}!</h1>
 
-        <section class="profile-info">
-            <h2>Informations du profil</h2>
-            <p><strong>Nom d'utilisateur :</strong> {{ user.username }}</p>
-            <p><strong>Email :</strong> {{ user.email }}</p>
-            <p><strong>Date d'inscription :</strong> {{ user.date_joined|date:"d/m/Y" }}</p>
-            <p><strong>Dernière connexion :</strong> {{ user.last_login|date:"d/m/Y H:i" }}</p>
-        </section>
+{% block content %}
+<header>
+    Mon Profil
+</header>
 
-        {% if user.first_name or user.last_name %}
-        <section class="additional-info">
-            <h2>Informations supplémentaires</h2>
-            {% if user.first_name %}
-                <p><strong>Prénom :</strong> {{ user.first_name }}</p>
-            {% endif %}
-            {% if user.last_name %}
-                <p><strong>Nom de famille :</strong> {{ user.last_name }}</p>
-            {% endif %}
-        </section>
-        {% endif %}
+<div class="container">
+    <h2>Informations du Profil</h2>
 
-        <section class="actions">
-            <h2>Actions</h2>
-            <a href="{% url 'password_change' %}" class="btn">Changer le mot de passe</a>
-            <a href="{% url 'logout' %}" class="btn">Déconnexion</a>
-            <!-- Ajouter un lien vers une page de modification du profil, si elle existe -->
-            <a href="{% url 'edit_profile' %}" class="btn">Modifier le profil</a>
-        </section>
+    <div class="profile-info">
+        <div>
+            <span>Nom d'utilisateur :</span>
+            <p>{{ user.username }}</p>
+        </div>
+        <div>
+            <span>Email :</span>
+            <p>{{ user.email }}</p>
+        </div>
+        <div>
+            <span>Date d'inscription :</span>
+            <p>{{ user.date_joined|date:"d/m/Y" }}</p>
+        </div>
     </div>
+
+    <a href="{% url 'edit_profile' %}" class="btn-edit">Modifier le Profil</a>
+</div>
+{% endblock %}
 </body>
 </html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Ajouter un échange de service</h2>
+    <p>Remplissez le formulaire ci-dessous pour déclarer un nouvel échange de service.</p>
+
+    <form method="post" class="form">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.provider.label_tag }}
+            {{ form.provider }}
+        </div>
+        <div class="mb-3">
+            {{ form.skill.label_tag }}
+            {{ form.skill }}
+        </div>
+        <div class="mb-3">
+            {{ form.date.label_tag }}
+            {{ form.date }}
+        </div>
+        <button type="submit" class="btn btn-success">Enregistrer l'échange</button>
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">Annuler</a>
+    </form>
+</div>
+{% endblock %}
+
+</body>
+</html>
