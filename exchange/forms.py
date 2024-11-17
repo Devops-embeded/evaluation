@@ -1,6 +1,6 @@
 from django import forms
+from django.contrib.auth.models import User  # Importer le modèle User de Django
 from .models import Skill, Availability, Activity, Exchange
-
 
 class ActivityForm(forms.ModelForm):
     class Meta:
@@ -20,19 +20,15 @@ class ActivityForm(forms.ModelForm):
             raise forms.ValidationError("Ce champ est obligatoire.")
         return description
 
+class SkillForm(forms.ModelForm):
+    class Meta:
+        model = Skill
+        fields = ['name', 'level']  # Exemple de champs, à adapter selon votre modèle
 
-class SkillForm:
-    pass
-
-
-class AvailabilityForm:
-    pass
-
-
-class User:
-    pass
-
-
+class AvailabilityForm(forms.ModelForm):
+    class Meta:
+        model = Availability
+        fields = ['day', 'time']  # Exemple de champs, à adapter selon votre modèle
 
 class ExchangeForm(forms.ModelForm):
     # Ajoutez un champ pour sélectionner un utilisateur parmi ceux qui sont enregistrés

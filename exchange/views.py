@@ -4,7 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.shortcuts import render, redirect
 
 from .forms import SkillForm, AvailabilityForm, \
-    ActivityForm  # Assurez-vous d'avoir défini ces formulaires dans forms.py
+    ActivityForm, ExchangeForm  # Assurez-vous d'avoir défini ces formulaires dans forms.py
 from .models import Skill, Activity
 
 

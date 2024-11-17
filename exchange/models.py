@@ -11,11 +11,12 @@ class Activity(models.Model):
     def __str__(self):
         return self.title
 
-# Modèle pour les compétences
-class Skill(models.Model):
-    name = models.CharField(max_length=100)  # Nom de la compétence
-    description = models.TextField(blank=True, null=True)  # Description optionnelle
 
+class Skill(models.Model):
+    id = models.AutoField(primary_key=True)  # Ajoutez explicitement l'ID si nécessaire
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True, null=True)
+    level = models.IntegerField()
     def __str__(self):
         return self.name
 
@@ -23,7 +24,8 @@ class Skill(models.Model):
 class Availability(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)  # Utilisateur lié
     skill = models.ForeignKey(Skill, on_delete=models.CASCADE)  # Compétence liée
-    date = models.DateField()  # Date de disponibilité
+    day = models.DateField()  # Date de disponibilité
+    time = models.TimeField()  # Exemple de champ time
 
     def __str__(self):
         return f"{self.user.username} - {self.skill.name} on {self.date}"
@@ -33,6 +35,8 @@ class Exchange(models.Model):
     requester = models.ForeignKey(User, on_delete=models.CASCADE, related_name="requested_exchanges")  # Demandeur
     provider = models.ForeignKey(User, on_delete=models.CASCADE, related_name="provided_exchanges")  # Fournisseur de la compétence
     skill = models.ForeignKey(Skill, on_delete=models.CASCADE)  # Compétence concernée
+    level = models.IntegerField()
+
     date = models.DateField()  # Date de l'échange
 
     def __str__(self):
